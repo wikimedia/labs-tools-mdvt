@@ -1,3 +1,24 @@
+/**********
+    MAIN
+**********/
+
+.card-btn-group .col a,
+.card-btn-group .col button {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.card-btn-group .col-sm-auto a,
+.card-btn-group .col-sm-auto button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left-width: 0;
+}
+
+/**********
+CONTRIBUTE
+**********/
+
 .contribute-card .card-header {
     height: 400px;
     background-image: url('https://picsum.photos/1200/600');

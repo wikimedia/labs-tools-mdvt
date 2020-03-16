@@ -17,7 +17,16 @@
                 <div class="card-body">
                     <h5 class="card-title">Depict Statements</h5>
                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum felis mauris, fermentum quis magna sollicitudin.</p>
-                    <a href="{{ url_for('contribute.contribute') }}" class="btn btn-outline-primary btn-block stretched-link">Start</a>
+                    <div class="row no-gutters card-btn-group">
+                        <div class="col">
+                            <a href="{{ url_for('contribute.contribute') }}" class="btn btn-outline-primary btn-block">Start (recent changes)</a>
+                        </div>
+                        <div class="col-sm-auto">
+                            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#query-settings-modal">
+                                <i class="fas fa-cog"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -30,6 +39,56 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="query-settings-modal" tabindex="-1" role="dialog" aria-labelledby="query-settings-modal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Select a specific media source</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col">
+                                <label for="option-recent" class="form-control-plaintext">Fetch from recent changes</label>
+                            </div>
+                            <div class="col-sm-auto form-check-inline">
+                                <input class="form-check-input" type="radio" name="source-type" value="recent" id="option-recent" checked>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <input type="text" class="form-control" name="category" id="category-input" placeholder="Category (e.g. Category:Hong Kong)">
+                            </div>
+                            <div class="col-sm-auto form-check-inline">
+                                <input class="form-check-input" type="radio" name="source-type" id="option-category" value="category">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <input type="text" class="form-control" name="tag" id="tag-input" placeholder="Tag (e.g. Isa-tool [1.0])">
+                            </div>
+                            <div class="col-sm-auto form-check-inline">
+                                <input class="form-check-input" type="radio" name="source-type" id="option-tag" value="tag">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Start</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock content %}
+{% block scripts %}
+
+<script src="{{ url_for('static', filename='home.js') }}"></script>
+
+{% endblock scripts %}
