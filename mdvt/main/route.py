@@ -14,6 +14,11 @@ def home():
                            username=session.get('username', None))
 
 
+@main_bt.route('/favicon.ico')
+def favicon():
+    return redirect(url_for('static', filename='favicon.ico'))
+
+
 @main_bt.route('/login', defaults={'return_url': None})
 @main_bt.route('/login/<path:return_url>')
 def login(return_url):
