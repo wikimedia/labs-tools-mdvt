@@ -1,0 +1,7 @@
+.contribute-img .card-header {
+    height: 400px;
+    background-image: url('https://picsum.photos/1200/600');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}

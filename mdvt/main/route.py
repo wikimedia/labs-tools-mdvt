@@ -4,18 +4,18 @@ import mwoauth
 
 from mdvt.config.config import config
 
-main = Blueprint('main', __name__)
+main_bt = Blueprint('main', __name__)
 
 
-@main.route('/')
+@main_bt.route('/')
 def home():
     return render_template('main/home.html',
                            title='Home',
                            username=session.get('username', None))
 
 
-@main.route('/login', defaults={'return_url': None})
-@main.route('/login/<path:return_url>')
+@main_bt.route('/login', defaults={'return_url': None})
+@main_bt.route('/login/<path:return_url>')
 def login(return_url):
     if return_url:
         session['return_url'] = return_url
@@ -27,7 +27,7 @@ def login(return_url):
     return redirect(redirect_url)
 
 
-@main.route('/oauth-callback')
+@main_bt.route('/oauth-callback')
 def oauth_callback():
     consumer_token = mwoauth.ConsumerToken(config['OAUTH_TOKEN'],
                                            config['OAUTH_SECRET'])
@@ -41,7 +41,7 @@ def oauth_callback():
     return redirect(session.pop('return_url', url_for('main.home')))
 
 
-@main.route('/logout')
+@main_bt.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('main.home'))
