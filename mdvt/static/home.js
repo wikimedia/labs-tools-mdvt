@@ -1,7 +1,7 @@
 $('#category-input').on('input', function() {
-    $('#option-category').prop('checked', true);
+    $('#filter-category').prop('checked', true);
 });
 
 $('#tag-input').on('input', function() {
-    $('#option-tag').prop('checked', true);
+    $('#filter-tag').prop('checked', true);
 });

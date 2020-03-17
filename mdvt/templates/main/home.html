@@ -22,7 +22,7 @@
                             <a href="{{ url_for('contribute.contribute') }}" class="btn btn-outline-primary btn-block">Start (recent changes)</a>
                         </div>
                         <div class="col-sm-auto">
-                            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#query-settings-modal">
+                            <button type="button" class="btn btn-outline-secondary" id="depict-option-btn" data-toggle="modal" data-target="#query-settings-modal">
                                 <i class="fas fa-cog"></i>
                             </button>
                         </div>
@@ -49,14 +49,14 @@
                         <span aria-hidden="true"><i class="fas fa-times"></i></span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form>
+                <form action="{{ url_for('contribute.contribute') }}" method="get">
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col">
                                 <label for="option-recent" class="form-control-plaintext">Fetch from recent changes</label>
                             </div>
                             <div class="col-sm-auto form-check-inline">
-                                <input class="form-check-input" type="radio" name="source-type" value="recent" id="option-recent" checked>
+                                <input class="form-check-input" type="radio" name="filter-type" value="recent" id="filter-recent" checked>
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -64,7 +64,7 @@
                                 <input type="text" class="form-control" name="category" id="category-input" placeholder="Category (e.g. Category:Hong Kong)">
                             </div>
                             <div class="col-sm-auto form-check-inline">
-                                <input class="form-check-input" type="radio" name="source-type" id="option-category" value="category">
+                                <input class="form-check-input" type="radio" name="filter-type" id="filter-category" value="category">
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -72,15 +72,15 @@
                                 <input type="text" class="form-control" name="tag" id="tag-input" placeholder="Tag (e.g. Isa-tool [1.0])">
                             </div>
                             <div class="col-sm-auto form-check-inline">
-                                <input class="form-check-input" type="radio" name="source-type" id="option-tag" value="tag">
+                                <input class="form-check-input" type="radio" name="filter-type" id="filter-tag" value="tag">
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Start</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Start</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
