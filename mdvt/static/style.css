@@ -19,13 +19,6 @@
 CONTRIBUTE
 **********/
 
-.contribute-card .dummy-image,
-.contribute-card .dummy-statement,
-.contribute-card .dummy-title,
-.contribute-card .dummy-desc {
-    display: none;
-}
-
 .contribute-card.loading .dummy-image,
 .contribute-card.loading .dummy-statement {
     display: block;
@@ -53,6 +46,26 @@ CONTRIBUTE
     margin-right: auto;
 }
 
+.contribute-card.loading .dummy-image,
+.contribute-card.loading .dummy-statement,
+.contribute-card.loading .dummy-title,
+.contribute-card.loading .dummy-desc {
+    animation: colorchange 3s infinite;
+    -webkit-animation: colorchange 3s infinite;
+}
+
+@keyframes colorchange {
+    0% {background-color: #DDD;}
+    50% {background-color: #CCC;}
+    100% {background-color: #DDD;}
+}
+
+@-webkit-keyframes colorchange {
+    0% {background-color: #DDD;}
+    50% {background-color: #CCC;}
+    100% {background-color: #DDD;}
+}
+
 .contribute-card.loading #img-link,
 .contribute-card.loading #statement {
     display: none;
@@ -61,6 +74,28 @@ CONTRIBUTE
 .contribute-card.loading button.btn {
     background-color: #AAA;
     border-color: #AAA;
+}
+
+.contribute-card .dummy-image,
+.contribute-card .dummy-statement,
+.contribute-card .dummy-title,
+.contribute-card .dummy-desc {
+    display: none;
+}
+
+.contribute-card .card-img-container {
+    text-align: center;
+}
+
+.contribute-card .card-img-top {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+}
+
+.contribute-card #statement a:first-child {
+    text-transform: capitalize;
 }
 
 .contribute-card .btn {

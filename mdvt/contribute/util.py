@@ -65,6 +65,7 @@ def get_contrib_request(continue_key=None):
             continue
 
         contribute_request = {
+            'media_page': file['descriptionurl'],
             'media_title': file['title'],
             'depict_id': depict_id,
             'depict_label': depict_label,
