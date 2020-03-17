@@ -3,11 +3,15 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-8 offset-md-2 mt-3">
-            <div class="card contribute-card">
-                <div class="card-header"></div>
+        <div class="col-md-8 offset-md-2 my-3">
+            <div class="card contribute-card loading">
+                <div class="dummy-image"></div>
+                <a href="" id="img-link">
+                    <img class="card-img-top" src="">
+                </a>
                 <div class="card-body">
-                    <h1 class="h2 text-center">Building(s) can be seen in the above image</h1>
+                    <div class="dummy-statement"></div>
+                    <h1 class="h2 text-center" id="statement">Building(s) can be seen in the above image</h1>
                     <div class="row mt-3">
                         <div class="col-sm-4 mt-1">
                             <button type="button" class="btn btn-success btn-lg btn-block">True</button>
@@ -21,8 +25,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <b>Title:</b> <span id="media-title">blah</span><br/>
-                    <b>Description:</b> <span id="media-desc">blah</span>
+                    <b>Title:</b> <div class="dummy-title"></div><span id="media-title"></span><br/>
+                    <b>Description:</b> <div class="dummy-desc"></div><span id="media-desc"></span>
                 </div>
             </div>
         </div>
@@ -30,3 +34,8 @@
 </div>
 
 {% endblock content %}
+{% block scripts %}
+
+<script src="{{ url_for('static', filename='contribute.js') }}"></script>
+
+{% endblock scripts %}

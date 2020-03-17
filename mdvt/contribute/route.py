@@ -1,5 +1,4 @@
-from flask import (Blueprint, jsonify, render_template, request, session,
-                   url_for)
+from flask import Blueprint, jsonify, render_template, request, session
 import requests
 
 from mdvt.contribute.util import get_contrib_request
@@ -9,13 +8,13 @@ contribute_bt = Blueprint('contribute', __name__)
 
 @contribute_bt.route('/contribute')
 def contribute():
-    filter_type = request.args.get('filter-type', 'recent')
-    if filter_type == 'recent':
-        filter_value = ''
-    elif filter_type == 'category':
-        filter_value = request.args.get('category')
-    elif filter_type == 'tag':
-        filter_value = request.args.get('tag')
+    # filter_type = request.args.get('filter-type', 'recent')
+    # if filter_type == 'recent':
+    #     filter_value = ''
+    # elif filter_type == 'category':
+    #     filter_value = request.args.get('category')
+    # elif filter_type == 'tag':
+    #     filter_value = request.args.get('tag')
 
     return render_template('contribute/contribute.html',
                            title='Contribute',

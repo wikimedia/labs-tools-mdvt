@@ -19,12 +19,48 @@
 CONTRIBUTE
 **********/
 
-.contribute-card .card-header {
+.contribute-card .dummy-image,
+.contribute-card .dummy-statement,
+.contribute-card .dummy-title,
+.contribute-card .dummy-desc {
+    display: none;
+}
+
+.contribute-card.loading .dummy-image,
+.contribute-card.loading .dummy-statement {
+    display: block;
+}
+
+.contribute-card.loading .dummy-title,
+.contribute-card.loading .dummy-desc {
+    display: inline-block;
+    width: 120px;
+    height: 19px;
+    background-color: #DDD;
+    margin-bottom: -4px;
+}
+
+.contribute-card.loading .dummy-image {
     height: 400px;
-    background-image: url('https://picsum.photos/1200/600');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+    background-color: #DDD;
+}
+
+.contribute-card.loading .dummy-statement {
+    width: 500px;
+    height: 38px;
+    background-color: #DDD;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contribute-card.loading #img-link,
+.contribute-card.loading #statement {
+    display: none;
+}
+
+.contribute-card.loading button.btn {
+    background-color: #AAA;
+    border-color: #AAA;
 }
 
 .contribute-card .btn {
