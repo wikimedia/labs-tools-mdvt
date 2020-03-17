@@ -85,6 +85,7 @@ CONTRIBUTE
 
 .contribute-card .card-img-container {
     text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,.125);
 }
 
 .contribute-card .card-img-top {
