@@ -2,10 +2,10 @@ from flask import Blueprint, jsonify, render_template, request, session
 
 from mdvt.contribute.util import get_contrib_request
 
-contribute_bt = Blueprint('contribute', __name__)
+contribute_bp = Blueprint('contribute', __name__)
 
 
-@contribute_bt.route('/contribute')
+@contribute_bp.route('/contribute')
 def contribute():
     # filter_type = request.args.get('filter-type', 'recent')
     # if filter_type == 'recent':
@@ -20,7 +20,7 @@ def contribute():
                            username=session.get('username', None))
 
 
-@contribute_bt.route('/api/get-media')
+@contribute_bp.route('/api/get-media')
 def api_get_media():
     filter_type = request.args.get('filter_type', 'recent')
     if filter_type == 'recent':

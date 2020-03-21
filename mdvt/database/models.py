@@ -5,10 +5,11 @@ from mdvt import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
+    sul_id = db.Column(db.Integer, unique=True, nullable=False)
+    username = db.Column(db.String(80), nullable=False)
 
     def __repr__(self):
-        return '<User {} {}>'.format(self.id, self.username)
+        return '<User {} {} {}>'.format(self.id, self.sul_id, self.username)
 
 
 class Contribution(db.Model):
@@ -18,7 +19,7 @@ class Contribution(db.Model):
     data_type = db.Column(db.String(20), nullable=False)
     data = db.Column(db.String(20), nullable=False)
     undo = db.Column(db.Boolean, nullable=False, default=False)
-    time_created = db.Column(db.Date, nullable=False,
+    time_created = db.Column(db.DateTime, nullable=False,
                              server_default=func.now())
 
     def __repr__(self):

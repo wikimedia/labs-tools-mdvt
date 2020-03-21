@@ -3,24 +3,26 @@ from flask import (Blueprint, redirect, render_template, request, session,
 import mwoauth
 
 from mdvt.config.config import config
+from mdvt.database.models import User
+from mdvt.database.util import db_insert_if_not_exist
 
-main_bt = Blueprint('main', __name__)
+main_bp = Blueprint('main', __name__)
 
 
-@main_bt.route('/')
+@main_bp.route('/')
 def home():
     return render_template('main/home.html',
                            title='Home',
                            username=session.get('username', None))
 
 
-@main_bt.route('/favicon.ico')
+@main_bp.route('/favicon.ico')
 def favicon():
     return redirect(url_for('static', filename='favicon.ico'))
 
 
-@main_bt.route('/login', defaults={'return_url': None})
-@main_bt.route('/login/<path:return_url>')
+@main_bp.route('/login', defaults={'return_url': None})
+@main_bp.route('/login/<path:return_url>')
 def login(return_url):
     if return_url:
         session['return_url'] = return_url
@@ -32,7 +34,7 @@ def login(return_url):
     return redirect(redirect_url)
 
 
-@main_bt.route('/oauth-callback')
+@main_bp.route('/oauth-callback')
 def oauth_callback():
     consumer_token = mwoauth.ConsumerToken(config['OAUTH_TOKEN'],
                                            config['OAUTH_SECRET'])
@@ -41,12 +43,17 @@ def oauth_callback():
         mwoauth.RequestToken(**session['request_token']), request.query_string)
     identity = mwoauth.identify(
         config['OAUTH_URI'], consumer_token, access_token)
-    session['username'] = identity['username']
+
+    user = db_insert_if_not_exist(
+        User(sul_id=identity['sub'], username=identity['username']),
+        sul_id=identity['sub'])
+
+    session['username'] = user.username
     session['access_token'] = dict(zip(access_token._fields, access_token))
     return redirect(session.pop('return_url', url_for('main.home')))
 
 
-@main_bt.route('/logout')
+@main_bp.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('main.home'))
