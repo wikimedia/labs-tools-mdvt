@@ -12,6 +12,17 @@ class User(db.Model):
         return '<User {} {} {}>'.format(self.id, self.sul_id, self.username)
 
 
+class UserSetting(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    key = db.Column(db.String(20), nullable=False)
+    value = db.Column(db.String(20))
+
+    def __repr__(self):
+        return '<UserSetting {} {} {} {}>'.format(
+            self.id, self.user_id, self.key, self.value)
+
+
 class Contribution(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

@@ -6,6 +6,7 @@ def db_insert_if_not_exist(entry, **kwargs):
     for key, value in kwargs.items():
         existing_entry.filter(key == value)
     existing_entry = existing_entry.first()
+
     if existing_entry is None:
         db.session.add(entry)
         db.session.commit()
