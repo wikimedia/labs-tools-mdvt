@@ -19,9 +19,7 @@
                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum felis mauris, fermentum quis magna sollicitudin.</p>
                     <div class="row no-gutters card-btn-group">
                         <div class="col">
-                            <button type="button" class="btn btn-outline-primary btn-block" id="depict-start-btn">Start (from {{ default_filter_type }}
-                                    {{ default_filter_category | replace('_', ' ') | replace('Category:', '') if default_filter_type == 'category' }}
-                                    {{ default_filter_tag if default_filter_type == 'tag' }})</button>
+                            <button type="button" class="btn btn-outline-primary btn-block" id="depict-start-btn">Start (from {{ default_filter_type }}{{ default_filter_category | replace('_', ' ') | replace('Category:', '') if default_filter_type == 'category' }}{{ default_filter_tag if default_filter_type == 'tag' }})</button>
                         </div>
                         <div class="col-sm-auto">
                             <button type="button" class="btn btn-outline-secondary" id="depict-option-btn" data-toggle="modal" data-target="#query-settings-modal">
