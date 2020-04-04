@@ -2,6 +2,11 @@
     MAIN
 **********/
 
+.card-btn-group a,
+.card-btn-group button {
+    height: 100%;
+}
+
 .card-btn-group .col a,
 .card-btn-group .col button {
     border-top-right-radius: 0;

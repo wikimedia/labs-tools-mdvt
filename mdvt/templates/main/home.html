@@ -19,7 +19,9 @@
                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum felis mauris, fermentum quis magna sollicitudin.</p>
                     <div class="row no-gutters card-btn-group">
                         <div class="col">
-                            <a href="{{ url_for('contribute.contribute') }}" class="btn btn-outline-primary btn-block">Start (recent changes)</a>
+                            <a href="{{ url_for('contribute.contribute') }}" class="btn btn-outline-primary btn-block">Start (from {{ default_filter_type }}
+                                    {{ default_filter_category | replace('_', ' ') | replace('Category:', '') if default_filter_type == 'category' }}
+                                    {{ default_filter_tag if default_filter_type == 'tag' }})</a>
                         </div>
                         <div class="col-sm-auto">
                             <button type="button" class="btn btn-outline-secondary" id="depict-option-btn" data-toggle="modal" data-target="#query-settings-modal">
@@ -61,7 +63,7 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col">
-                                <input type="text" class="form-control" name="category" id="category-input" placeholder="Category (e.g. Category:Hong Kong)">
+                                <input type="text" class="form-control" name="category" id="category-input" placeholder="Category (e.g. Category:Hong Kong)" value="{{ default_filter_category if default_filter_category is not none }}">
                             </div>
                             <div class="col-sm-auto form-check-inline">
                                 <input class="form-check-input" type="radio" name="filter-type" id="filter-category" value="category">
@@ -69,7 +71,7 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col">
-                                <input type="text" class="form-control" name="tag" id="tag-input" placeholder="Tag (e.g. Isa-tool [1.0])">
+                                <input type="text" class="form-control" name="tag" id="tag-input" placeholder="Tag (e.g. Isa-tool [1.0])" value="{{ default_filter_tag if default_filter_tag is not none }}">
                             </div>
                             <div class="col-sm-auto form-check-inline">
                                 <input class="form-check-input" type="radio" name="filter-type" id="filter-tag" value="tag">

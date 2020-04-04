@@ -1,19 +1,29 @@
 from flask import Blueprint, jsonify, render_template, request, session
 
 from mdvt.contribute.util import get_contrib_request
+from mdvt.database.util import db_set_or_update_user_setting
 
 contribute_bp = Blueprint('contribute', __name__)
 
 
 @contribute_bp.route('/contribute')
 def contribute():
-    # filter_type = request.args.get('filter-type', 'recent')
-    # if filter_type == 'recent':
-    #     filter_value = ''
-    # elif filter_type == 'category':
-    #     filter_value = request.args.get('category')
-    # elif filter_type == 'tag':
-    #     filter_value = request.args.get('tag')
+    filter_type = request.args.get('filter-type', 'recent')
+    db_set_or_update_user_setting(session.get('user_id'),
+                                  'filter_type',
+                                  filter_type)
+
+    filter_category = request.args.get('category')
+    if filter_category:
+        db_set_or_update_user_setting(session.get('user_id'),
+                                      'filter_category',
+                                      filter_category)
+
+    filter_tag = request.args.get('tag')
+    if filter_tag:
+        db_set_or_update_user_setting(session.get('user_id'),
+                                      'filter_tag',
+                                      filter_tag)
 
     return render_template('contribute/contribute.html',
                            title='Contribute',

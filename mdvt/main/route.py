@@ -4,16 +4,31 @@ import mwoauth
 
 from mdvt.config.config import config
 from mdvt.database.models import User
-from mdvt.database.util import db_insert_if_not_exist
+from mdvt.database.util import db_insert_if_not_exist, db_get_user_setting
 
 main_bp = Blueprint('main', __name__)
 
 
 @main_bp.route('/')
 def home():
+    if 'username' in session:
+        default_filter_type = db_get_user_setting(session['user_id'],
+                                                  'filter_type')
+        default_filter_category = db_get_user_setting(session['user_id'],
+                                                      'filter_category')
+        default_filter_tag = db_get_user_setting(session['user_id'],
+                                                 'filter_tag')
+    else:
+        default_filter_type = 'recent'
+        default_filter_category = ''
+        default_filter_tag = ''
+
     return render_template('main/home.html',
                            title='Home',
-                           username=session.get('username', None))
+                           username=session.get('username', None),
+                           default_filter_type=default_filter_type,
+                           default_filter_category=default_filter_category,
+                           default_filter_tag=default_filter_tag)
 
 
 @main_bp.route('/favicon.ico')
@@ -48,6 +63,7 @@ def oauth_callback():
         User(sul_id=identity['sub'], username=identity['username']),
         sul_id=identity['sub'])
 
+    session['user_id'] = user.id
     session['username'] = user.username
     session['access_token'] = dict(zip(access_token._fields, access_token))
     return redirect(session.pop('return_url', url_for('main.home')))
