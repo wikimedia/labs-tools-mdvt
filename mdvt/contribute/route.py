@@ -1,13 +1,18 @@
-from flask import Blueprint, jsonify, render_template, request, session
+from flask import (Blueprint, jsonify, render_template, redirect, request,
+                   session, url_for)
 
 from mdvt.contribute.util import get_contrib_request
 from mdvt.database.util import db_set_or_update_user_setting
+from mdvt.main.util import is_logged_in
 
 contribute_bp = Blueprint('contribute', __name__)
 
 
 @contribute_bp.route('/contribute')
 def contribute():
+    if not is_logged_in():
+        return redirect(url_for('main.login'))
+
     filter_type = request.args.get('filter-type', 'recent')
     db_set_or_update_user_setting(session.get('user_id'),
                                   'filter_type',
