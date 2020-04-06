@@ -24,7 +24,7 @@ def contribute():
                                       'filter_category',
                                       filter_category)
 
-    filter_tag = request.args.get('tag')
+    filter_tag = request.args.get('tag').replace('_', ' ')
     if filter_tag:
         db_set_or_update_user_setting(session.get('user_id'),
                                       'filter_tag',
@@ -39,9 +39,10 @@ def contribute():
 def api_get_media():
     filter_type = request.args.get('filter_type', 'recent')
     if filter_type == 'recent':
-        return jsonify(get_contrib_request(filter_type, None))
+        filter_value = None
     elif filter_type == 'category':
-        return jsonify(get_contrib_request(filter_type,
-                                           request.args.get('filter_value')))
-    elif filter_type == 'tag':
-        request.args.get('filter_value')
+        filter_value = request.args.get('filter_value')
+    else:
+        filter_value = request.args.get('filter_value').replace('_', ' ')
+
+    return jsonify(get_contrib_request(filter_type, filter_value))

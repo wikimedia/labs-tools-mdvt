@@ -11,7 +11,6 @@ $('#tag-input').on('input', function() {
 
 $('#query-settings-form').submit(function() {
     $('#category-input').val($('#category-input').val().replace(' ', '_'));
-    $('#tag-input').val($('#tag-input').val().replace(' ', '_'));
     return true;
 });
 

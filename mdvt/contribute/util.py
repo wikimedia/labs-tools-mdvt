@@ -1,7 +1,7 @@
 import requests
 
 
-def api_allimages(continue_key=None):
+def api_all_images(continue_key=None):
     params = {
         'action': 'query',
         'format': 'json',
@@ -23,7 +23,7 @@ def api_allimages(continue_key=None):
             response['continue']['aicontinue'])
 
 
-def api_categorymembers(category_name, continue_key=None):
+def api_category_members(category_name, continue_key=None):
     params = {
         'action': 'query',
         'format': 'json',
@@ -46,9 +46,32 @@ def api_categorymembers(category_name, continue_key=None):
             response['continue']['gcmcontinue'])
 
 
+def api_tagged_changes(tag, continue_key=None):
+    params = {
+        'action': 'query',
+        'format': 'json',
+        'list': 'recentchanges',
+        'rctag': tag,
+        'rcprop': 'title|timestamp|ids|comment|tags',
+        'rclimit': 'max',
+        'rctype': 'edit|new|log|categorize|external'
+    }
+
+    if continue_key is not None:
+        params['rccontinue'] = continue_key
+
+    response = requests.get(
+        'https://commons.wikimedia.org/w/api.php',
+        params=params
+    ).json()
+
+    return (response['query']['recentchanges'],
+            response['continue']['rccontinue'])
+
+
 def get_contrib_request(filter_type, filter_value, continue_key=None):
     if filter_type == 'recent':
-        latest_files, continue_key = api_allimages(continue_key)
+        latest_files, continue_key = api_all_images(continue_key)
 
         for file in latest_files:
             file_depicts = get_file_depicts(file['title'])
@@ -66,8 +89,7 @@ def get_contrib_request(filter_type, filter_value, continue_key=None):
             }
             return contribute_request
     elif filter_type == 'category':
-        pages, continue_key = api_categorymembers(filter_value,
-                                                  continue_key)
+        pages, continue_key = api_category_members(filter_value, continue_key)
 
         for page in pages:
             if page['ns'] != 6:
@@ -81,6 +103,26 @@ def get_contrib_request(filter_type, filter_value, continue_key=None):
             contribute_request = {
                 'media_page': page['fullurl'],
                 'media_title': page['title'],
+                'depict_id': depict_id,
+                'depict_label': depict_label,
+                'depict_description': depict_description
+            }
+            return contribute_request
+    elif filter_type == 'tag':
+        changes, continue_key = api_tagged_changes(filter_value, continue_key)
+
+        for change in changes:
+            if change['ns'] != 6:
+                continue
+            file_depicts = get_file_depicts(change['title'])
+            if file_depicts is not None:
+                depict_id, depict_label, depict_description = file_depicts
+            else:
+                continue
+
+            contribute_request = {
+                'media_page': 'temp',
+                'media_title': change['title'],
                 'depict_id': depict_id,
                 'depict_label': depict_label,
                 'depict_description': depict_description
