@@ -16,7 +16,7 @@ class UserSetting(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     key = db.Column(db.String(20), nullable=False)
-    value = db.Column(db.String(20))
+    value = db.Column(db.String(50))
 
     def __repr__(self):
         return '<UserSetting {} {} {} {}>'.format(
