@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = config['SECRET_KEY']
 app.config['SQLALCHEMY_DATABASE_URI'] = config['DATABASE_URI']
+app.config['JSON_SORT_KEYS'] = False
 db = SQLAlchemy(app)
 
 from mdvt.contribute.route import contribute_bp

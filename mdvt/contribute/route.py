@@ -46,3 +46,22 @@ def api_get_media():
         filter_value = request.args.get('filter_value').replace('_', ' ')
 
     return jsonify(get_contrib_request(filter_type, filter_value))
+
+
+@contribute_bp.route('/api/contribute', methods=['post'])
+def api_contribute():
+    if not is_logged_in():
+        return jsonify({
+            'status': 'fail',
+            'data': {
+                'title': 'User is not logged in'
+            }
+        }), 401
+
+    print(request.get_json())
+    return jsonify({
+        'status': 'success',
+        'data': {
+            'name': 'success'
+        }
+    })

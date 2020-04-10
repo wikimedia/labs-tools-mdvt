@@ -93,7 +93,8 @@ def get_contrib_request(filter_type, filter_value, continue_key=None):
         for file in latest_files:
             file_depicts = get_file_depicts(file['title'])
             if file_depicts is not None:
-                depict_id, depict_label, depict_description = file_depicts
+                (depict_id, depict_label,
+                 depict_description, claim_id) = file_depicts
             else:
                 continue
 
@@ -102,7 +103,8 @@ def get_contrib_request(filter_type, filter_value, continue_key=None):
                 'media_title': file['title'],
                 'depict_id': depict_id,
                 'depict_label': depict_label,
-                'depict_description': depict_description
+                'depict_description': depict_description,
+                'claim_id': claim_id
             }
             return contribute_request
     elif filter_type == 'category':
@@ -113,7 +115,8 @@ def get_contrib_request(filter_type, filter_value, continue_key=None):
                 continue
             file_depicts = get_file_depicts(page['title'])
             if file_depicts is not None:
-                depict_id, depict_label, depict_description = file_depicts
+                (depict_id, depict_label,
+                 depict_description, claim_id) = file_depicts
             else:
                 continue
 
@@ -122,7 +125,8 @@ def get_contrib_request(filter_type, filter_value, continue_key=None):
                 'media_title': page['title'],
                 'depict_id': depict_id,
                 'depict_label': depict_label,
-                'depict_description': depict_description
+                'depict_description': depict_description,
+                'claim_id': claim_id
             }
             return contribute_request
     elif filter_type == 'tag':
@@ -133,7 +137,8 @@ def get_contrib_request(filter_type, filter_value, continue_key=None):
                 continue
             file_depicts = get_file_depicts(change['title'])
             if file_depicts is not None:
-                depict_id, depict_label, depict_description = file_depicts
+                (depict_id, depict_label,
+                 depict_description, claim_id) = file_depicts
             else:
                 continue
 
@@ -143,7 +148,8 @@ def get_contrib_request(filter_type, filter_value, continue_key=None):
                 'media_title': change['title'],
                 'depict_id': depict_id,
                 'depict_label': depict_label,
-                'depict_description': depict_description
+                'depict_description': depict_description,
+                'claim_id': claim_id
             }
             return contribute_request
 
@@ -170,6 +176,7 @@ def get_file_depicts(file_name):
 
         depict_id = (statements['P180'][0]['mainsnak']['datavalue']
                      ['value']['id'])
+        claim_id = statements['P180'][0]['id']
 
         depict = requests.get(
             'https://www.wikidata.org/w/api.php',
@@ -183,6 +190,6 @@ def get_file_depicts(file_name):
         depict_label = depict['labels']['en']['value']
         depict_description = depict['descriptions']['en']['value']
 
-        return (depict_id, depict_label, depict_description)
+        return (depict_id, depict_label, depict_description, claim_id)
     except KeyError:
         return None

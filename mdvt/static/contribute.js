@@ -9,6 +9,8 @@ switch (filter_type) {
         break;
 }
 
+var current_claim;
+
 $.get({
     url: '../api/get-media',
     data: {
@@ -21,4 +23,31 @@ $.get({
     $('.contribute-card .card-img-top').attr('src', 'https://commons.wikimedia.org/wiki/Special:FilePath/' + response.media_title + '?width=500');
     $('#statement').html('<a href="https://www.wikidata.org/wiki/' + response.depict_id + '" target="_blank">' + response.depict_label + '</a> can be seen in the above <a href="' + response.media_page + '" target="_blank">image</a>');
     $('#media-title').html(response.media_title);
+    current_claim = response.claim_id;
+
+});
+
+function post_contribution(status) {
+    $.post({
+        url: '../api/contribute',
+        data: JSON.stringify({
+            claim_id: current_claim,
+            status: status
+        }),
+        contentType : 'application/json'
+    }).done(function(response) {
+        console.log(response);
+    });
+}
+
+$('#true-btn').click(function() {
+    post_contribution(true);
+});
+
+$('#false-btn').click(function() {
+    post_contribution(false);
+});
+
+$('#skip-btn').click(function() {
+    console.log('oooooooooops, not done yet, you are stuck lol');
 });
