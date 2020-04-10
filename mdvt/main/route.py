@@ -27,12 +27,29 @@ def home():
         default_filter_category = ''
         default_filter_tag = 'OAuth CID: 1393'
 
+    tags = [
+        ['OAuth CID: 1393',
+         'OAuth_CID:_1393',
+         'ISA Tool'],
+        ['computer-aided-tagging',
+         'computer-aided-tagging',
+         'Computer-aided Tagging']
+    ]
+
+    default_filter_tag_name = ''
+    for tag in tags:
+        if default_filter_tag == tag[0]:
+            default_filter_tag_name = tag[2]
+            break
+
     return render_template('main/home.html',
                            title='Home',
                            username=session.get('username', None),
                            default_filter_type=default_filter_type,
                            default_filter_category=default_filter_category,
-                           default_filter_tag=default_filter_tag)
+                           default_filter_tag=default_filter_tag,
+                           default_filter_tag_name=default_filter_tag_name,
+                           tags=tags)
 
 
 @main_bp.route('/favicon.ico')

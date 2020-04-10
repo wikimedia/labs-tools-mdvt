@@ -19,7 +19,7 @@
                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum felis mauris, fermentum quis magna sollicitudin.</p>
                     <div class="row no-gutters card-btn-group">
                         <div class="col">
-                            <button type="button" class="btn btn-outline-primary btn-block" id="depict-start-btn">Start (from {{ default_filter_type }}{{ ' ' + default_filter_category | replace('_', ' ') | replace('Category:', '') if default_filter_type == 'category' }}{{ ' ' + default_filter_tag if default_filter_type == 'tag' }})</button>
+                            <button type="button" class="btn btn-outline-primary btn-block" id="depict-start-btn">Start (from {{ default_filter_type }}{{ ' ' + default_filter_category | replace('_', ' ') | replace('Category:', '') if default_filter_type == 'category' }}{{ ' ' + default_filter_tag_name if default_filter_type == 'tag' }})</button>
                         </div>
                         <div class="col-sm-auto">
                             <button type="button" class="btn btn-outline-secondary" id="depict-option-btn" data-toggle="modal" data-target="#query-settings-modal">
@@ -55,8 +55,9 @@
                             <div class="col">
                                 <label for="tag-input">Tag name</label>
                                 <select class="custom-select" name="tag" id="tag-input">
-                                    <option value="OAuth_CID:_1393"{% if default_filter_tag == 'OAuth CID: 1393' %} selected="selected"{% endif %}>ISA Tool</option>
-                                    <option value="computer-aided-tagging"{% if default_filter_tag == 'computer-aided-tagging' %} selected="selected"{% endif %}>Computer-Aided Tagging</option>
+                                    {% for tag in tags %}
+                                        <option value="{{ tag[1] }}"{% if default_filter_tag == tag[0] %} selected="selected"{% endif %}>{{ tag[2] }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="col-sm-auto form-check-inline">
