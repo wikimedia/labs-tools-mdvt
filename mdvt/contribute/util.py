@@ -52,7 +52,7 @@ def api_tagged_changes(tag, continue_key=None):
         'format': 'json',
         'list': 'recentchanges',
         'rctag': tag,
-        'rcprop': 'title|timestamp|ids|comment|tags',
+        'rcprop': 'title|timestamp|ids',
         'rclimit': 'max',
         'rctype': 'edit|new|log|categorize|external'
     }
@@ -67,6 +67,23 @@ def api_tagged_changes(tag, continue_key=None):
 
     return (response['query']['recentchanges'],
             response['continue']['rccontinue'])
+
+
+def api_info_url(pageid):
+    params = {
+        'action': 'query',
+        'format': 'json',
+        'prop': 'info',
+        'pageids': pageid,
+        'inprop': 'url'
+    }
+
+    response = requests.get(
+        'https://commons.wikimedia.org/w/api.php',
+        params=params
+    ).json()
+
+    return response['query']['pages'][pageid]['fullurl']
 
 
 def get_contrib_request(filter_type, filter_value, continue_key=None):
@@ -121,7 +138,8 @@ def get_contrib_request(filter_type, filter_value, continue_key=None):
                 continue
 
             contribute_request = {
-                'media_page': 'temp',
+                'media_page': api_info_url(str(change['pageid'])),
+                'media_page_id': change['pageid'],
                 'media_title': change['title'],
                 'depict_id': depict_id,
                 'depict_label': depict_label,
