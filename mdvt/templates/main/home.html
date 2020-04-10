@@ -53,10 +53,14 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col">
-                                <label for="filter-recent" class="form-control-plaintext">Fetch from recent changes</label>
+                                <label for="tag-input">Tag name</label>
+                                <select class="custom-select" name="tag" id="tag-input">
+                                    <option value="OAuth_CID:_1393"{% if default_filter_tag == 'OAuth CID: 1393' %} selected="selected"{% endif %}>ISA Tool</option>
+                                    <option value="computer-aided-tagging"{% if default_filter_tag == 'computer-aided-tagging' %} selected="selected"{% endif %}>Computer-Aided Tagging</option>
+                                </select>
                             </div>
                             <div class="col-sm-auto form-check-inline">
-                                <input class="form-check-input" type="radio" name="filter-type" value="recent" id="filter-recent"{% if default_filter_type == 'recent' %} checked{% endif %}>
+                                <input class="form-check-input" type="radio" name="filter-type" id="filter-tag" value="tag"{% if default_filter_type == 'tag' %} checked{% endif %}>
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -70,14 +74,10 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col">
-                                <label for="tag-input">Tag name</label>
-                                <select class="custom-select" name="tag" id="tag-input">
-                                    <option value="OAuth_CID:_1393"{% if default_filter_tag == 'OAuth CID: 1393' %} selected="selected"{% endif %}>ISA Tool</option>
-                                    <option value="computer-aided-tagging"{% if default_filter_tag == 'computer-aided-tagging' %} selected="selected"{% endif %}>Computer-Aided Tagging</option>
-                                </select>
+                                <label for="filter-recent" class="form-control-plaintext">Fetch from recent changes</label>
                             </div>
                             <div class="col-sm-auto form-check-inline">
-                                <input class="form-check-input" type="radio" name="filter-type" id="filter-tag" value="tag"{% if default_filter_type == 'tag' %} checked{% endif %}>
+                                <input class="form-check-input" type="radio" name="filter-type" value="recent" id="filter-recent"{% if default_filter_type == 'recent' %} checked{% endif %}>
                             </div>
                         </div>
                     </div>

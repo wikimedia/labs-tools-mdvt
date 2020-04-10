@@ -18,10 +18,14 @@ def home():
                                                       'filter_category')
         default_filter_tag = db_get_user_setting(session['user_id'],
                                                  'filter_tag')
-    else:
-        default_filter_type = 'recent'
+
+    if ('username' not in session
+        or all(value is None for value in [default_filter_type,
+                                           default_filter_category,
+                                           default_filter_tag])):
+        default_filter_type = 'tag'
         default_filter_category = ''
-        default_filter_tag = ''
+        default_filter_tag = 'OAuth CID: 1393'
 
     return render_template('main/home.html',
                            title='Home',
