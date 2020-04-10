@@ -49,5 +49,5 @@ $('#false-btn').click(function() {
 });
 
 $('#skip-btn').click(function() {
-    console.log('oooooooooops, not done yet, you are stuck lol');
+    $('.toast').toast('show');
 });
