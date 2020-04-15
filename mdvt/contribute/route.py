@@ -45,7 +45,10 @@ def api_get_media():
     else:
         filter_value = request.args.get('filter_value').replace('_', ' ')
 
-    return jsonify(get_contrib_request(filter_type, filter_value))
+    return jsonify({
+        'status': 'success',
+        'data': get_contrib_request(filter_type, filter_value)
+    })
 
 
 @contribute_bp.route('/api/contribute', methods=['post'])
