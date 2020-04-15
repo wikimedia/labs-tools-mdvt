@@ -30,7 +30,8 @@ CONTRIBUTE
 }
 
 .contribute-card.loading .dummy-title,
-.contribute-card.loading .dummy-desc {
+.contribute-card.loading .dummy-desc,
+.contribute-card.loading .dummy-cats {
     display: inline-block;
     width: 120px;
     height: 19px;
@@ -54,7 +55,8 @@ CONTRIBUTE
 .contribute-card.loading .dummy-image,
 .contribute-card.loading .dummy-statement,
 .contribute-card.loading .dummy-title,
-.contribute-card.loading .dummy-desc {
+.contribute-card.loading .dummy-desc,
+.contribute-card.loading .dummy-cats {
     animation: colorchange 3s infinite;
     -webkit-animation: colorchange 3s infinite;
 }
@@ -84,7 +86,8 @@ CONTRIBUTE
 .contribute-card .dummy-image,
 .contribute-card .dummy-statement,
 .contribute-card .dummy-title,
-.contribute-card .dummy-desc {
+.contribute-card .dummy-desc,
+.contribute-card .dummy-cats {
     display: none;
 }
 

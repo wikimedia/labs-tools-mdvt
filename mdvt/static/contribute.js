@@ -11,6 +11,26 @@ switch (filter_type) {
 
 var current_claim;
 
+function populate_media_metadata(media_title) {
+    $.get({
+        url: 'https://commons.wikimedia.org/w/api.php',
+        data: {
+            'action': 'query',
+            'format': 'json',
+            'origin': '*',
+            'prop': 'imageinfo',
+            'titles': media_title,
+            'iiprop': 'timestamp|user|extmetadata'
+        }
+    }).done(function(response) {
+        var ext_metadata = Object.values(response.query.pages)[0].imageinfo[0].extmetadata;
+        $('#media-desc').html(ext_metadata.ImageDescription.value);
+        ext_metadata.Categories.value.split('|').forEach(function(category) {
+            $('#media-cats').append('<span class="badge badge-secondary">' + category + '</span> ');
+        });
+    });
+}
+
 $.get({
     url: '../api/get-media',
     data: {
@@ -18,7 +38,7 @@ $.get({
         filter_value: filter_value
     }
 }).done(function(response) {
-    if (response.status != "success") {
+    if (response.status != 'success') {
         show_toast('warning', 'Failed to get media.');
     } else {
         response = response.data;
@@ -28,6 +48,7 @@ $.get({
         $('#statement').html('<a href="https://www.wikidata.org/wiki/' + response.depict_id + '" target="_blank">' + response.depict_label + '</a> can be seen in the above <a href="' + response.media_page + '" target="_blank">image</a>');
         $('#media-title').html(response.media_title);
         current_claim = response.claim_id;
+        populate_media_metadata(response.media_title);
     }
 });
 
