@@ -10,6 +10,8 @@ switch (filter_type) {
 }
 
 var current_claim;
+var popover_img;
+var popover_text;
 
 function populate_media_metadata(media_title) {
     $.get({
@@ -45,10 +47,37 @@ $.get({
         $('.contribute-card').removeClass('loading');
         $('#img-link').attr('href', response.media_page);
         $('.contribute-card .card-img-top').attr('src', 'https://commons.wikimedia.org/wiki/Special:FilePath/' + response.media_title + '?width=500');
-        $('#statement').html('<a href="https://www.wikidata.org/wiki/' + response.depict_id + '" target="_blank">' + response.depict_label + '</a> can be seen in the above <a href="' + response.media_page + '" target="_blank">image</a>');
+        $('#statement').html('<a href="https://www.wikidata.org/wiki/' + response.depict_id + '" target="_blank" data-toggle="popover">' + response.depict_label + '</a> can be seen in the above <a href="' + response.media_page + '" target="_blank">image</a>');
         $('#media-title').html(response.media_title);
         current_claim = response.claim_id;
+
         populate_media_metadata(response.media_title);
+
+        var depict_id = response.depict_id;
+
+        $.get({
+            url: 'https://www.wikidata.org/w/api.php',
+            data: {
+                'action': 'wbgetentities',
+                'origin': '*',
+                'format': 'json',
+                'ids': depict_id,
+                'languages': 'en',
+                'normalize': 1
+            }
+        }).done(function(response) {
+            var image_title = '';
+            if ('P18' in response.entities[depict_id].claims) {
+                image_title = response.entities[depict_id].claims.P18[0].mainsnak.datavalue.value;
+            }
+            $('[data-toggle="popover"]').popover({
+                trigger: 'hover',
+                html: true,
+                placement: 'top',
+                template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><img class="img-fluid" src="https://commons.wikimedia.org/wiki/Special:FilePath/' + image_title + '"/><div class="popover-body"></div></div>',
+                content: response.entities[depict_id].descriptions.en.value
+            });
+        });
     }
 });
 
