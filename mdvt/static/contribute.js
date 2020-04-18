@@ -10,8 +10,7 @@ switch (filter_type) {
 }
 
 var current_claim;
-var popover_img;
-var popover_text;
+var csrf;
 
 function populate_media_metadata(media_title) {
     $.get({
@@ -50,6 +49,7 @@ $.get({
         $('#statement').html('<a href="https://www.wikidata.org/wiki/' + response.depict_id + '" target="_blank" data-toggle="popover">' + response.depict_label + '</a> can be seen in the above <a href="' + response.media_page + '" target="_blank">image</a>');
         $('#media-title').html(response.media_title);
         current_claim = response.claim_id;
+        csrf = response.csrf;
 
         populate_media_metadata(response.media_title);
 
@@ -86,11 +86,14 @@ function post_contribution(status) {
         url: '../api/contribute',
         data: JSON.stringify({
             claim_id: current_claim,
-            status: status
+            status: status,
+            csrf : csrf
         }),
         contentType : 'application/json'
     }).done(function(response) {
         console.log(response);
+    }).fail(function(response) {
+        show_toast('warning', 'Failed to post contribution, please try again.');
     });
 }
 

@@ -61,7 +61,23 @@ def api_contribute():
             }
         }), 401
 
-    print(request.get_json())
+    if 'csrf' not in request.get_json():
+        return jsonify({
+            'status': 'fail',
+            'data': {
+                'title': 'Missing CSRF token'
+            }
+        }), 401
+
+    if request.get_json()['csrf'] != session['csrf']:
+        return jsonify({
+            'status': 'fail',
+            'data': {
+                'title': 'CSRF token not recognized'
+            }
+        }), 401
+
+    session['csrf'] = None
     return jsonify({
         'status': 'success',
         'data': {

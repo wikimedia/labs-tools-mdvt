@@ -1,4 +1,7 @@
+from flask import session
+
 import requests
+import secrets
 
 
 def api_all_images(continue_key=None):
@@ -104,7 +107,8 @@ def get_contrib_request(filter_type, filter_value, continue_key=None):
                 'depict_id': depict_id,
                 'depict_label': depict_label,
                 'depict_description': depict_description,
-                'claim_id': claim_id
+                'claim_id': claim_id,
+                'csrf': gen_csrf()
             }
             return contribute_request
     elif filter_type == 'category':
@@ -122,11 +126,13 @@ def get_contrib_request(filter_type, filter_value, continue_key=None):
 
             contribute_request = {
                 'media_page': page['fullurl'],
+                'media_page_id': page['pageid'],
                 'media_title': page['title'],
                 'depict_id': depict_id,
                 'depict_label': depict_label,
                 'depict_description': depict_description,
-                'claim_id': claim_id
+                'claim_id': claim_id,
+                'csrf': gen_csrf()
             }
             return contribute_request
     elif filter_type == 'tag':
@@ -149,11 +155,18 @@ def get_contrib_request(filter_type, filter_value, continue_key=None):
                 'depict_id': depict_id,
                 'depict_label': depict_label,
                 'depict_description': depict_description,
-                'claim_id': claim_id
+                'claim_id': claim_id,
+                'csrf': gen_csrf()
             }
             return contribute_request
 
     return get_contrib_request(filter_type, filter_value, continue_key)
+
+
+def gen_csrf():
+    csrf = secrets.token_hex(16)
+    session['csrf'] = csrf
+    return csrf
 
 
 def get_file_depicts(file_name):
