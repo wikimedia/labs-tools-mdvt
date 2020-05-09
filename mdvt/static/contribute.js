@@ -92,6 +92,7 @@ function post_contribution(status) {
         contentType : 'application/json'
     }).done(function(response) {
         console.log(response);
+        show_toast('success', 'Theoretically your contribution is recorded.');
     }).fail(function(response) {
         show_toast('warning', 'Failed to post contribution, please try again.');
     });
